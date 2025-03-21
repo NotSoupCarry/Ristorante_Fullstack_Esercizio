@@ -1,0 +1,13 @@
+<h2>Lista Piatti</h2>
+<ul>
+  <li *ngFor="let piatto of piatti">
+    {{ piatto.name }} - €{{ piatto.price }}<br>
+    <small>{{ piatto.description }}</small>
+  </li>
+</ul>
+
+<h3>Aggiungi un Piatto</h3>
+<input [(ngModel)]="nuovoPiatto.name" placeholder="Nome">
+<input [(ngModel)]="nuovoPiatto.price" type="number" placeholder="Prezzo">
+<input [(ngModel)]="nuovoPiatto.description" placeholder="Descrizione">
+<button (click)="addPiatto()">Aggiungi</button>
