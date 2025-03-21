@@ -8,7 +8,7 @@ import { Piatto } from '../models/Piatto';
 })
 
 export class PiattoService {
-  private apiUrl = "http://localhost:8080/piatto"
+  private apiUrl = "http://localhost:8080/piatti"
 
   constructor(private http: HttpClient){}
 
