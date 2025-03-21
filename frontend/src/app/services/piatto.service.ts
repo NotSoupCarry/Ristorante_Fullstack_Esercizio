@@ -10,13 +10,18 @@ import { Piatto } from '../models/Piatto';
 export class PiattoService {
   private apiUrl = "http://localhost:8080/piatti"
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) { }
 
-  getUsers(): Observable<Piatto[]>{
+  getPiatti(): Observable<Piatto[]> {
     return this.http.get<Piatto[]>(this.apiUrl);
   }
 
-  addUser(piatto: Piatto): Observable<Piatto> {
+  addPiatto(piatto: Piatto): Observable<Piatto> {
     return this.http.post<Piatto>(this.apiUrl, piatto);
   }
+
+  deletePiatto(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
 }

@@ -13,29 +13,43 @@ import { PiattoService } from '../../services/piatto.service';
 })
 export class PiattoComponentComponent implements OnInit {
   piatti: Piatto[] = [];
-  nuovoPiatto: Piatto = { name: '', price: 0, description: '' };
+  nuovoPiatto: Piatto = {name: '', price: 0, description: '' };
 
-  constructor(private piattoService: PiattoService) {}
+  constructor(private piattoService: PiattoService) { }
 
   ngOnInit(): void {
     this.loadPiatti();
   }
 
   loadPiatti(): void {
-    this.piattoService.getUsers().subscribe(piatti => {
+    this.piattoService.getPiatti().subscribe(piatti => {
       this.piatti = piatti;
     });
   }
 
   addPiatto(): void {
-    if (!this.nuovoPiatto.name || this.nuovoPiatto.price <= 0) {
-      alert("Nome e prezzo sono obbligatori!");
+    if (!this.nuovoPiatto.name || this.nuovoPiatto.price <= 0 || !this.nuovoPiatto.description) {
+      alert("Nome, prezzo e descrizione sono obbligatori!");
       return;
     }
 
-    this.piattoService.addUser(this.nuovoPiatto).subscribe(piatto => {
-      this.piatti.push(piatto);
+    this.piattoService.addPiatto(this.nuovoPiatto).subscribe(piatto => {
+      this.loadPiatti(); // Ricarica i piatti
       this.nuovoPiatto = { name: '', price: 0, description: '' }; // Reset form
     });
+  }
+
+  deletePiatto(id: number): void {
+    if (confirm("Sei sicuro di voler eliminare questo piatto?")) {
+      this.piattoService.deletePiatto(id).subscribe({
+        next: () => {
+          this.loadPiatti(); // Ricarica la lista dopo l'eliminazione
+        },
+        error: (err) => {
+          alert('Errore durante l\'eliminazione del piatto.');
+          console.error(err);
+        }
+      });
+    }
   }
 }

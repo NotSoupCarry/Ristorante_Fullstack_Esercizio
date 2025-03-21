@@ -3,6 +3,7 @@
   <li *ngFor="let piatto of piatti">
     {{ piatto.name }} - €{{ piatto.price }}<br>
     <small>{{ piatto.description }}</small>
+    <button class="btnDelete" (click)="deletePiatto(piatto.id!)">Elimina</button>
   </li>
 </ul>
 
